@@ -33,6 +33,10 @@ namespace UnityEngine
         public virtual Type m_NeighborType => typeof(TilingRule.Neighbor);
 
         /// <summary>
+        /// The Texture2D tileset, used to change tileset.
+        /// </summary>
+        public Texture2D m_Tileset;
+        /// <summary>
         /// The Default Sprite set when creating a new Rule.
         /// </summary>
         public Sprite m_DefaultSprite;

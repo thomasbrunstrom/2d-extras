@@ -131,7 +131,7 @@ namespace UnityEditor
         /// <summary>
         /// Creates a Preview for the IsometricRuleTile.
         /// </summary>
-        protected override void CreatePreview()
+        public override void CreatePreview()
         {
             base.CreatePreview();
 

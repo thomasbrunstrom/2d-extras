@@ -184,7 +184,7 @@ namespace UnityEditor
         /// <summary>
         /// Creates a Preview for the HexagonalRuleTile.
         /// </summary>
-        protected override void CreatePreview()
+        public override void CreatePreview()
         {
             base.CreatePreview();
 
