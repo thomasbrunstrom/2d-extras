@@ -247,15 +247,16 @@ namespace UnityEditor
             EditorGUI.BeginChangeCheck();
             if (Event.current.commandName == "ObjectSelectorUpdated")
             {
-                var texturePath = UnityEditor.AssetDatabase.GetAssetPath(tile.m_Tileset);
-                var oldSprites = UnityEditor.AssetDatabase.LoadAllAssetsAtPath(texturePath).OfType<Sprite>().ToArray();
-                var selectedObject = EditorGUIUtility.GetObjectPickerObject() as Texture2D;
+                var texturePath = AssetDatabase.GetAssetPath(tile.m_Tileset);
+                var oldSprites = AssetDatabase.LoadAllAssetsAtPath(texturePath).OfType<Sprite>().ToArray();
 
-                var newPath = UnityEditor.AssetDatabase.GetAssetPath(selectedObject);
-                var newSprites = UnityEditor.AssetDatabase.LoadAllAssetsAtPath(newPath).OfType<Sprite>().ToArray();
+                var selectedObject = EditorGUIUtility.GetObjectPickerObject() as Texture2D;
+                var newPath = AssetDatabase.GetAssetPath(selectedObject);
+                var newSprites = AssetDatabase.LoadAllAssetsAtPath(newPath).OfType<Sprite>().ToArray();
 
                 Array.Sort(oldSprites, (a, b) => a.name.CompareTo(b.name));
                 Array.Sort(newSprites, (a, b) => a.name.CompareTo(b.name));
+
                 try
                 {
                     foreach (var p in tile.m_TilingRules)
@@ -264,15 +265,18 @@ namespace UnityEditor
                         {
                             for (int i = 0; i < p.m_Sprites.Length; i++)
                             {
-                                var oldName = p.m_Sprites[i].name;
-                                var index = Array.FindIndex(oldSprites, t => t.name.Equals(oldName));
-                                if (index < 0)
+                                if(p.m_Sprites[i] != null)
                                 {
-                                    Debug.LogError($"Can't finde {oldName} in old array.");
-                                }
-                                else
-                                {
-                                    p.m_Sprites[i] = newSprites[index];
+                                    var oldName = p.m_Sprites[i].name;
+                                    var index = Array.FindIndex(oldSprites, t => t.name.Equals(oldName));
+                                    if (index < 0)
+                                    {
+                                        Debug.LogError($"Can't finde {oldName} in old array.");
+                                    }
+                                    else
+                                    {
+                                        p.m_Sprites[i] = newSprites[index];
+                                    }
                                 }
                             }
                         }
@@ -280,7 +284,7 @@ namespace UnityEditor
                 }
                 catch (Exception ex)
                 {
-                    Debug.LogError(ex.Message);
+                    Debug.LogError(ex);
                 }
             }
 
